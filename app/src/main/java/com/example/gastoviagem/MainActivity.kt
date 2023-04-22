@@ -24,14 +24,22 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
         }
     }
 
+    fun validation(): Boolean {
+        return (binding.editDistance.text.toString() != ""
+                && binding.editPrice.text.toString() != ""
+                && binding.editAutonomy.text.toString() != ""
+                && binding.editAutonomy.text.toString().toFloat() != 0f)
+    }
+
     fun calculate() {
-
-        val distance = binding.editDistance.text.toString().toFloat()
-        val price = binding.editPrice.text.toString().toFloat()
-        val autonomy = binding.editAutonomy.text.toString().toFloat()
-
-        val totalValue = (distance * price) / autonomy
-        binding.textTotalPrice.text = "R$ ${"%.2f".format(totalValue)}"
-//        Toast.makeText(this, "R$ ${"%.2f".format(totalValue)}", Toast.LENGTH_LONG).show()
+        if (validation()) {
+            val distance = binding.editDistance.text.toString().toFloat()
+            val price = binding.editPrice.text.toString().toFloat()
+            val autonomy = binding.editAutonomy.text.toString().toFloat()
+            val totalValue = (distance * price) / autonomy
+            binding.textTotalPrice.text = "R$ ${"%.2f".format(totalValue)}"
+        } else {
+            Toast.makeText(this, R.string.validation_field, Toast.LENGTH_LONG).show()
+        }
     }
 }
